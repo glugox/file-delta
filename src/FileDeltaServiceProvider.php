@@ -8,11 +8,15 @@ class FileDeltaServiceProvider extends ServiceProvider
 {
     public function register(): void
     {
-        // Bind services or singletons here
+        $this->app->singleton('file-delta', function () {
+            return new FileDeltaManager();
+        });
     }
 
     public function boot(): void
     {
-        // Publish configs, migrations, routes if needed
+        $this->publishes([
+        __DIR__.'/../config/file-delta.php' => config_path('file-delta.php'),
+    ], 'config');
     }
 }
